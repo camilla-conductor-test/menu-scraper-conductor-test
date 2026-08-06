@@ -1,5 +1,36 @@
-import requests
+import sys
+import subprocess
 from bs4 import BeautifulSoup
+
+def ensure_requests():
+    """Ensure the 'requests' package is available.
+
+    If missing, prompt the user to install it via pip. On confirmation,
+    attempt installation and exit so the script can be re‑run.
+    Returns True if the package is already present.
+    """
+    try:
+        import importlib
+        importlib.import_module('requests')
+        return True
+    except ModuleNotFoundError:
+        print("The 'requests' package is required to run this scraper.")
+        answer = input("Would you like to install it now? [y/N] ").strip().lower()
+        if answer == "y":
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
+                print("Successfully installed 'requests'. Please re‑run the script.")
+                sys.exit(0)
+            except Exception as e:
+                print(f"Failed to install 'requests': {e}")
+                sys.exit(1)
+        else:
+            print("Installation declined. Exiting.")
+            sys.exit(1)
+
+# Ensure requests is available before importing it for use later.
+ensure_requests()
+import requests
 
 # main page url
 MAIN_URL = "https://nutrition.sa.ucsc.edu/"  
