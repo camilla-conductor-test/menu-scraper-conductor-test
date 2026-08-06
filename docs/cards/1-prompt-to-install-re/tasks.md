@@ -1,0 +1,7 @@
+# Tasks: Prompt to install requests when the dependency is missing
+
+- [ ] Milestone 1 — Create a reusable `ensure_requests()` helper (or inline function) that detects whether `requests` can be imported, touching `menu_entries.py` (and optional new `utils/dependency_check.py`). Done when the function returns True on installed environments and False otherwise without raising errors.
+- [ ] Milestone 2 — Implement interactive prompt and pip‑install logic inside the helper, handling user input, success, and failure messages. Touches only `menu_entries.py`. Done when missing `requests` triggers the exact message and prompt, and a “y” runs pip with clear outcome reporting.
+- [ ] Milestone 3 — Call the helper at the very start of `menu_entries.py`, exiting early if installation is declined or fails. Done when script aborts before any other code runs in the missing‑dependency case.
+- [ ] Milestone 4 — Refactor existing top‑level import of `requests` to occur after the check (or rely on the helper’s import), ensuring normal operation when the package is present. Done when the script runs unchanged functionality with `requests` installed and no ImportError occurs.
+- [ ] Milestone 5 — Perform manual verification across all three scenarios (installed, declined, successful install) and confirm clear messaging, proper exit codes, and no regression in scraper behavior. Done when tests pass and edge‑case handling is verified.
